@@ -3,6 +3,9 @@ const pool = require("../lib/utils/pool");
 const request = require("supertest");
 const app = require("../lib/app");
 
+const Student = require("../lib/models/Student");
+const Class = require("../lib/models/Class");
+
 describe("08_many-to-many routes", () => {
   beforeEach(() => {
     return pool.query(fs.readFileSync("./sql/setup.sql", "utf-8"));
