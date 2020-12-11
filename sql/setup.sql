@@ -13,7 +13,7 @@ CREATE TABLE classes (
 );
 
 CREATE TABLE enrollments (
-    student_id BIGINT REFERENCES students(id)
-    class_id BIGINT REFERENCES classes(id)
-    enrollment_id PRIMARY KEY (student_id, class_id)
+    student_id BIGINT REFERENCES students(id),
+    class_id BIGINT REFERENCES classes(id),
+    PRIMARY KEY (student_id, class_id)
 );
