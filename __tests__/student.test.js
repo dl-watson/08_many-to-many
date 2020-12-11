@@ -21,11 +21,9 @@ describe("08_many-to-many routes", () => {
   });
 
   it("adds a new student record", async () => {
-    await Student.create({
+    const res = await request(app).post("/students").send({
       name: "Dee",
     });
-
-    const res = await request(app).get("/students");
 
     expect(res.body).toEqual({
       id: "1",
@@ -33,7 +31,25 @@ describe("08_many-to-many routes", () => {
     });
   });
 
-  it("gets all student records", async () => {});
+  it("gets all student records", async () => {
+    const students = await Promise.all(
+      [
+        {
+          name: "Dee",
+        },
+        {
+          name: "Richard",
+        },
+        {
+          name: "Jena",
+        },
+      ].map((student) => Student.create(student))
+    );
+
+    const query = await Student.find();
+
+    expect(query.body).toEqual(expect.arrayContaining(students));
+  });
 
   it("gets a student record by id", async () => {});
 
