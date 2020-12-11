@@ -16,4 +16,14 @@ describe("08_many-to-many routes", () => {
     const res = await request(app).get("/");
     expect(res.body).toEqual({ hello: "world" });
   });
+
+  it("adds a new student record", async () => {});
+
+  it("gets all student records", async () => {});
+
+  it("gets a student record by id", async () => {});
+
+  it("updates a student record by id", async () => {});
+
+  it("deletes a student record by id", async () => {});
 });
