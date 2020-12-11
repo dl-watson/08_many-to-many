@@ -20,7 +20,18 @@ describe("08_many-to-many routes", () => {
     expect(res.body).toEqual({ hello: "world" });
   });
 
-  it("adds a new student record", async () => {});
+  it("adds a new student record", async () => {
+    await Student.create({
+      name: "Dee",
+    });
+
+    const res = await request(app).get("/students");
+
+    expect(res.body).toEqual({
+      id: "1",
+      name: "Dee",
+    });
+  });
 
   it("gets all student records", async () => {});
 
