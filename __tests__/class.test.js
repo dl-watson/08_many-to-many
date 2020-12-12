@@ -17,7 +17,16 @@ describe("08_many-to-many routes", () => {
     expect(res.body).toEqual({ hello: "world" });
   });
 
-  it("adds a new class record", async () => {});
+  it("adds a new class record", async () => {
+    const res = await request(app).post({
+      title: "Developer 101",
+    });
+
+    expect(res.body).toEqual({
+      id: "1",
+      title: "Developer 101",
+    });
+  });
 
   it("gets all class records", async () => {});
 
