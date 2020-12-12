@@ -78,5 +78,14 @@ describe("08_many-to-many routes", () => {
     expect(res.body).toEqual(newCourse);
   });
 
-  it("deletes a class record by id", async () => {});
+  it("deletes a class record by id", async () => {
+    const course = await Class.create({
+      title: "Deeeeeeeeeeeeeeeeeeeeeeeveloper 101",
+    });
+
+    const res = await request(app).delete(`/classes/${course.id}`);
+
+    expect(res.body).toEqual(course);
+  });
+  });
 });
