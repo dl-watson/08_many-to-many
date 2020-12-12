@@ -46,9 +46,9 @@ describe("08_many-to-many routes", () => {
       ].map((student) => Student.create(student))
     );
 
-    const query = await Student.find();
+    const res = await request(app).get("/students");
 
-    expect(query.body).toEqual(expect.arrayContaining(students));
+    expect(res.body).toEqual(students);
   });
 
   it("gets a student record by id", async () => {
