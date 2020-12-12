@@ -4,7 +4,6 @@ const request = require("supertest");
 const app = require("../lib/app");
 
 const Student = require("../lib/models/Student");
-const Class = require("../lib/models/Class");
 
 describe("08_many-to-many routes", () => {
   beforeEach(() => {

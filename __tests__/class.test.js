@@ -3,6 +3,8 @@ const pool = require("../lib/utils/pool");
 const request = require("supertest");
 const app = require("../lib/app");
 
+const Class = require("../lib/models/Class");
+
 describe("08_many-to-many routes", () => {
   beforeEach(() => {
     return pool.query(fs.readFileSync("./sql/setup.sql", "utf-8"));
@@ -18,7 +20,7 @@ describe("08_many-to-many routes", () => {
   });
 
   it("adds a new class record", async () => {
-    const res = await request(app).post({
+    const res = await request(app).post("/classes").send({
       title: "Developer 101",
     });
 
