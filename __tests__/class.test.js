@@ -28,7 +28,29 @@ describe("08_many-to-many routes", () => {
     });
   });
 
-  it("gets all class records", async () => {});
+  it("gets all class records", async () => {
+    const courses = await Promise.all(
+      [
+        {
+          title: "Developer 101",
+        },
+        {
+          title: "Code 201: Fundamentals of Software Development",
+        },
+        {
+          title: "Code 301: Intermediate Software Development",
+        },
+        {
+          title:
+            "Code 401: Advanced Software Development in Full Stack JavaScript",
+        },
+      ].map((course) => new Class(course))
+    );
+
+    const res = await request(app).get("/students");
+
+    expect(res.body).toEqual(expect.arrayContaining(courses));
+  });
 
   it("gets a class record by id", async () => {});
 
