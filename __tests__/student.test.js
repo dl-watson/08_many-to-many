@@ -70,7 +70,7 @@ describe("08_many-to-many routes", () => {
       name: "Deeeeeeeeeeeeeeeeeeeeeee",
     });
 
-    const res = await request.get(`/students/${oldStudent.id}`);
+    const res = await request(app).get(`/students/${oldStudent.id}`);
 
     expect(res.body).toEqual(newStudent);
   });
