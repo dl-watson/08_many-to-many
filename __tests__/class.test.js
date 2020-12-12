@@ -46,10 +46,10 @@ describe("08_many-to-many routes", () => {
           title:
             "Code 401: Advanced Software Development in Full Stack JavaScript",
         },
-      ].map((course) => new Class(course))
+      ].map((course) => Class.create(course))
     );
 
-    const res = await request(app).get("/students");
+    const res = await request(app).get("/classes");
 
     expect(res.body).toEqual(expect.arrayContaining(courses));
   });
