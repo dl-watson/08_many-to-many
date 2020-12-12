@@ -87,5 +87,4 @@ describe("08_many-to-many routes", () => {
 
     expect(res.body).toEqual(course);
   });
-  });
 });
