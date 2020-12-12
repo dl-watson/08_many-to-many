@@ -82,6 +82,6 @@ describe("08_many-to-many routes", () => {
 
     const res = await request(app).delete(`/students/${student.id}`);
 
-    expect(res.body).toEqual([]);
+    expect(res.body).toEqual(student);
   });
 });
