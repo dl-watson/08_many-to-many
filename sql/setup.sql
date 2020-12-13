@@ -33,12 +33,13 @@ CREATE TABLE enrollments (
 -- INSERT INTO enrollments (student_id, class_id) VALUES (1, 1), (1, 2)
 
 -- SELECT  
--- 	students.name,
--- 	array_agg(classes.title)
+-- students.name,
+-- array_to_json(array_agg(classes.title)) AS enrolled
 -- FROM 
--- 	enrollments
+-- enrollments
 -- JOIN students
 -- ON enrollments.student_id = students.id
 -- JOIN classes
 -- ON enrollments.class_id = classes.id
+-- WHERE students.id=1
 -- GROUP BY students.name

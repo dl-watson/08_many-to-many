@@ -4,6 +4,7 @@ const request = require("supertest");
 const app = require("../lib/app");
 
 const Student = require("../lib/models/Student");
+const Class = require("../lib/models/Class");
 
 describe("08_many-to-many routes", () => {
   beforeEach(() => {
@@ -48,6 +49,44 @@ describe("08_many-to-many routes", () => {
     const res = await request(app).get("/students");
 
     expect(res.body).toEqual(expect.arrayContaining(students));
+  });
+
+  it("gets a student's enrollments", async () => {
+    await Promise.all(
+      [
+        {
+          title: "Developer 101",
+        },
+        {
+          title: "Code 201: Fundamentals of Software Development",
+        },
+        {
+          title: "Code 301: Intermediate Software Development",
+        },
+        {
+          title:
+            "Code 401: Advanced Software Development in Full Stack JavaScript",
+        },
+      ].map((course) => Class.create(course))
+    );
+
+    const enrollments = await Student.create({
+      name: "Dee",
+      enrolled: [
+        "Code 401: Advanced Software Development in Full Stack JavaScript",
+        "Code 301: Intermediate Software Development",
+      ],
+    });
+
+    const res = await request(app).get(`/students/${enrollments.id}`);
+
+    expect(res.body).toEqual({
+      ...enrollments.body,
+      enrolled: [
+        "Code 401: Advanced Software Development in Full Stack JavaScript",
+        "Code 301: Intermediate Software Development",
+      ],
+    });
   });
 
   it("gets a student record by id", async () => {
