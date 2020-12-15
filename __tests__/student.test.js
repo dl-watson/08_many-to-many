@@ -52,7 +52,7 @@ describe("08_many-to-many routes", () => {
   });
 
   it("gets a student's enrollments", async () => {
-    await Promise.all(
+    const courses = await Promise.all(
       [
         {
           title: "Developer 101",
@@ -78,10 +78,14 @@ describe("08_many-to-many routes", () => {
       ],
     });
 
+    console.log(enrollments.id);
+    console.log(enrollments.name);
+
     const res = await request(app).get(`/students/${enrollments.id}`);
 
     expect(res.body).toEqual({
-      ...enrollments.body,
+      id: "1",
+      name: "Dee",
       enrolled: [
         "Code 401: Advanced Software Development in Full Stack JavaScript",
         "Code 301: Intermediate Software Development",
@@ -89,28 +93,19 @@ describe("08_many-to-many routes", () => {
     });
   });
 
-  it("gets a student record by id", async () => {
-    const student = await Student.create({
-      name: "Dee",
-    });
-
-    const res = await request(app).get(`/students/${student.id}`);
-
-    expect(res.body).toEqual(student);
-  });
-
   it("updates a student record by id", async () => {
-    const oldStudent = await Student.create({
-      name: "Dee",
-    });
-
-    const newStudent = await Student.update(oldStudent.id, {
+    const student = await Student.create({
       name: "Deeeeeeeeeeeeeeeeeeeeeee",
     });
 
-    const res = await request(app).get(`/students/${oldStudent.id}`);
+    const res = await request(app).put(`/students/${student.id}`).send({
+      name: "Dee",
+    });
 
-    expect(res.body).toEqual(newStudent);
+    expect(res.body).toEqual({
+      id: student.id,
+      name: "Dee",
+    });
   });
 
   it("deletes a student record by id", async () => {
