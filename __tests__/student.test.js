@@ -51,8 +51,8 @@ describe("08_many-to-many routes", () => {
     expect(res.body).toEqual(expect.arrayContaining(students));
   });
 
-  it("gets a student's enrollments", async () => {
-    const courses = await Promise.all(
+  it.skip("gets a student's enrollments", async () => {
+    await Promise.all(
       [
         {
           title: "Developer 101",
@@ -70,27 +70,28 @@ describe("08_many-to-many routes", () => {
       ].map((course) => Class.create(course))
     );
 
-    const enrollments = await Student.create({
-      name: "Dee",
-      enrolled: [
-        "Code 401: Advanced Software Development in Full Stack JavaScript",
-        "Code 301: Intermediate Software Development",
-      ],
-    });
+    const enrollments = await request(app)
+      .post("/students")
+      .send({
+        name: "Dee",
+        enrolled: [
+          "Code 401: Advanced Software Development in Full Stack JavaScript",
+          "Code 301: Intermediate Software Development",
+        ],
+      });
 
-    console.log(enrollments.id);
-    console.log(enrollments.name);
-
-    const res = await request(app).get(`/students/${enrollments.id}`);
-
-    expect(res.body).toEqual({
-      id: "1",
-      name: "Dee",
-      enrolled: [
-        "Code 401: Advanced Software Development in Full Stack JavaScript",
-        "Code 301: Intermediate Software Development",
-      ],
-    });
+    return request(app)
+      .get(`/students/${enrollments.body.id}`)
+      .then((res) =>
+        expect(res.text).toEqual({
+          id: "1",
+          name: "Dee",
+          enrolled: [
+            "Code 401: Advanced Software Development in Full Stack JavaScript",
+            "Code 301: Intermediate Software Development",
+          ],
+        })
+      );
   });
 
   it("updates a student record by id", async () => {
